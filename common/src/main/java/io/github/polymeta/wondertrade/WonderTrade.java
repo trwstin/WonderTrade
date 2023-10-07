@@ -41,7 +41,7 @@ public class WonderTrade {
     private static final Logger logger = LogManager.getLogger();
 
     public static void init() {
-        logger.info("WonderTrade by Polymeta starting up!");
+        logger.info("WonderTrade starting up!");
         scheduler = new ScheduledThreadPoolExecutor(1, r -> {
             Thread thread = Executors.defaultThreadFactory().newThread(r);
             thread.setName("WonderTrade Thread");
@@ -70,9 +70,7 @@ public class WonderTrade {
 
     public static void regeneratePool(int size) {
         var randomProp = PokemonProperties.Companion.parse("species=random", " ", "=");
-        var blacklistSet = config.blacklist.stream()
-                .map(s -> PokemonProperties.Companion.parse(s, " ", "="))
-                .collect(Collectors.toSet());
+        var blacklistSet = config.blacklist;
         pool.pokemon.clear();
     
         for (int i = 0; i < size; i++) {
@@ -169,7 +167,6 @@ public class WonderTrade {
             e.printStackTrace();
         }
     }
-
 
     private static final class WorkerThreadFactory implements ForkJoinPool.ForkJoinWorkerThreadFactory {
         private static final AtomicInteger COUNT = new AtomicInteger(0);

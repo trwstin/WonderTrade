@@ -22,12 +22,12 @@ public class BaseConfig {
             .create();
 
     public int poolSize = 5;
-    public boolean cooldownEnabled = true;
     public int cooldown = 5;
-    public List<String> blacklist = new ArrayList<>();
     public int poolMinLevel = 1;
     public int poolMaxLevel = 100;
+    public boolean cooldownEnabled = true;
     public boolean adjustNewPokemonToLevelRange = false;
+    public Set<PokemonProperties> blacklist = new HashSet<>();
 
     public MessageConfig messages = new MessageConfig();
 
@@ -67,11 +67,14 @@ public class BaseConfig {
 
         public Component broadcastPokemon(Pokemon pokemon) {
             var stringMessage = pokemon.getShiny() ? this.broadcastShinyPokemonAdded : broadcastPokemonAdded;
+
             if(stringMessage.isBlank() || stringMessage.isEmpty()) {
                 return Component.empty();
             }
+
             var text = WonderTrade.miniMessage.deserialize(stringMessage,
                     Placeholder.unparsed("pokemon", pokemon.getDisplayName().getString()));
+
             return Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(text));
         }
 
