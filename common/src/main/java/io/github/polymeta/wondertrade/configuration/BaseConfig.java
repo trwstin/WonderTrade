@@ -35,7 +35,6 @@ public class BaseConfig {
         public String wonderTradeFeedback = "<gray>[<white>Wonder<red>Trade<gray>] <white>Are you sure you want to trade your" +
                 " <aqua>lvl <level> <pokemon></aqua>?<wtconfirm><yellow> Click here to confirm!</wtconfirm>";
         public String cooldownFeedback = "<gray>[<white>Wonder<red>Trade<gray>] <red>You are on cooldown!";
-        public String pokemonNotAllowed = "<gray>[<white>Wonder<red>Trade<gray>] <red>You cannot trade this pokemon!";
         public String successFeedback = "<gray>[<white>Wonder<red>Trade<gray>] <green>Successfully traded!";
         public String broadcastPokemonAdded = "<gray>[<white>Wonder<red>Trade<gray>]<white> <pokemon> got added to the wondertrade pool!";
         public String broadcastShinyPokemonAdded = "<gray>[<white>Wonder<red>Trade<gray>]<yellow> Shiny <pokemon> got added to the wondertrade pool!";
@@ -76,9 +75,5 @@ public class BaseConfig {
             return Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(text));
         }
 
-        public Component pokemonNotAllowed() {
-            var text = WonderTrade.miniMessage.deserialize(this.pokemonNotAllowed);
-            return Component.Serializer.fromJson(GsonComponentSerializer.gson().serialize(text));
-        }
     }
 }

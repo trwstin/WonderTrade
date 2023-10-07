@@ -1,15 +1,15 @@
 modLoader = "javafml"
 loaderVersion = "[43,)"
-issueTrackerURL = "https://github.com/Polymeta/WonderTrade/issues"
+issueTrackerURL = "https://github.com/trwstin/WonderTrade/issues"
 license = "MIT License"
 
 [[mods]]
 modId = "wondertrade"
 version = "${version}"
 displayName = "WonderTrade"
-authors = "Polymeta"
+authors = "trwstin"
 description = '''
-A wondertrade sidemod written for cobblemon
+A wondertrade mod written for cobblemon
 '''
 #logoFile = ""
 

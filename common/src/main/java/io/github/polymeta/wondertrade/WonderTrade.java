@@ -50,7 +50,7 @@ public class WonderTrade {
         scheduler.setRemoveOnCancelPolicy(true);
         scheduler.setExecuteExistingDelayedTasksAfterShutdownPolicy(false);
         worker = new ForkJoinPool(16, new WorkerThreadFactory(), new ExceptionHandler(), false);
-        //load config and pool and message configuration
+
         loadConfig();
         loadPool();
 
@@ -66,25 +66,30 @@ public class WonderTrade {
             }
             return Unit.INSTANCE;
         });
-        //TODO register message ticks
     }
 
     public static void regeneratePool(int size) {
         var randomProp = PokemonProperties.Companion.parse("species=random", " ", "=");
-        var blacklist = config.blacklist.stream().map(s -> PokemonProperties.Companion.parse(s, " ", "=")).toList();
+        var blacklistSet = config.blacklist.stream()
+                .map(s -> PokemonProperties.Companion.parse(s, " ", "="))
+                .collect(Collectors.toSet());
         pool.pokemon.clear();
+    
         for (int i = 0; i < size; i++) {
             randomProp.setLevel(rng.nextInt(Math.max(1, config.poolMinLevel), Math.min(Cobblemon.config.getMaxPokemonLevel(), config.poolMaxLevel)));
             Pokemon pokemon;
-            while(true) {
+    
+            while (true) {
                 pokemon = randomProp.create();
-                final Pokemon finalPokemon = pokemon;
-                if(blacklist.stream().noneMatch(prop -> prop.matches(finalPokemon))) {
+    
+                if (!blacklistSet.contains(pokemon)) {
                     break;
                 }
             }
+    
             pool.pokemon.add(pokemon.createPokemonProperties(PokemonPropertyExtractor.Companion.getALL()).asString(" "));
         }
+    
         savePool();
     }
 
